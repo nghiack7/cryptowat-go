@@ -1,10 +1,11 @@
 package models
 
 import (
+	"time"
+
 	"github.com/cryptowat-go/server/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"time"
 )
 
 type SignUpInput struct {
@@ -96,7 +97,11 @@ func OpenDb(config config.Config) *gorm.DB {
 	connectionString := config.DBUrl
 	db, err := gorm.Open(postgres.Open(connectionString), &gorm.Config{})
 	if err != nil {
-		panic("Failed to connect to database")
+		time.Sleep(2 * time.Second)
+		db, err = gorm.Open(postgres.Open(connectionString), &gorm.Config{})
+		if err != nil {
+			panic("Failed to connect to database")
+		}
 	}
 	db.AutoMigrate(&User{}, Position{})
 	return db
