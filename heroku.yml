@@ -1,3 +1,4 @@
 build:
   docker:
-    web: docker-compose.yml
+    web: ./app/Dockerfile
+    server: ./server/Dockerfile
