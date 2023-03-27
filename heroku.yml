@@ -1,11 +1,3 @@
 build:
-  docker: 
-    web: ./app/Dockerfile
-    server: ./server/Dockerfile
-  postgres:
-    context: ./postgres
-    dockerfile: Dockerfile
-    env:
-      POSTGRES_PASSWORD: admin
-      POSTGRES_USER: postgres
-  
+  docker:
+    web: docker-compose.yml
