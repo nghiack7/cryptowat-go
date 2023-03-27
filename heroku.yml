@@ -1,18 +1,11 @@
 build:
-  server:
-    context: ./server
-    dockerfile: Dockerfile
-    env:
-      APP_ENV_FILE: ./server/app.env
+  docker: 
+    web: ./app/Dockerfile
+    server: ./server/Dockerfile
   postgres:
     context: ./postgres
     dockerfile: Dockerfile
     env:
       POSTGRES_PASSWORD: admin
       POSTGRES_USER: postgres
-  app:
-    context: ./app
-    dockerfile: Dockerfile
-    env:
-      APP_ENV_FILE: ./app/.env
-    
+  
