@@ -2,12 +2,12 @@ package middleware
 
 import (
 	"fmt"
-	"github.com/cryptowat-go/server/config"
-	"github.com/cryptowat-go/server/services"
-	"github.com/cryptowat-go/server/utils"
 	"net/http"
 	"strings"
 
+	"github.com/cryptowat-go/server/config"
+	"github.com/cryptowat-go/server/services"
+	"github.com/cryptowat-go/server/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +15,12 @@ func DeserializeUser(userService services.UserService) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var access_token string
 		cookie, err := ctx.Cookie("access_token")
-
+		fmt.Println("cookie: ", cookie)
+		fmt.Println("err: ", err)
+		if cookie == "" {
+			structCookie, _ := ctx.Request.Cookie("access_token")
+			cookie = structCookie.Value
+		}
 		authorizationHeader := ctx.Request.Header.Get("Authorization")
 		fields := strings.Fields(authorizationHeader)
 

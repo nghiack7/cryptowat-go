@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"net/http"
+
 	"github.com/cryptowat-go/server/config"
 	"github.com/cryptowat-go/server/controllers"
 	"github.com/cryptowat-go/server/models"
@@ -11,8 +14,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"log"
-	"net/http"
 )
 
 var (
@@ -51,27 +52,7 @@ func init() {
 		panic(err)
 	}
 
-	//if err := mongoclient.Ping(ctx, readpref.Primary()); err != nil {
-	//	panic(err)
-	//}
-
 	fmt.Println("Postgrest successfully connected...")
-
-	// Connect to Redis
-	//redisclient = redis.NewClient(&redis.Options{
-	//	Addr: config.RedisUri,
-	//})
-
-	//if _, err := redisclient.Ping(ctx).Result(); err != nil {
-	//	panic(err)
-	//}
-
-	//err = redisclient.Set(ctx, "test", "Welcome to Golang with Redis and MongoDB", 0).Err()
-	//if err != nil {
-	//	panic(err)
-	//}
-
-	//fmt.Println("Redis client connected successfully...")
 
 	// Collections
 	userService = services.NewUserServiceImpl(db, ctx)
@@ -94,7 +75,7 @@ func init() {
 func main() {
 
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://localhost:8000", "http://localhost:3000"}
+	corsConfig.AllowOrigins = []string{"http://localhost:8000", "http://localhost:3000", "https://cryptowat-app.herokuapp.com"}
 	corsConfig.AllowCredentials = true
 
 	server.Use(cors.New(corsConfig))

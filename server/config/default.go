@@ -1,14 +1,17 @@
 package config
 
 import (
-	"github.com/spf13/viper"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
 	DBUrl    string `mapstructure:"POSTGRES_URL"`
 	RedisUri string `mapstructure:"REDIS_URL"`
 	Port     string `mapstructure:"PORT"`
+
+	Domain string `mapstructure:"DOMAIN"`
 
 	ClientOrigin           string        `mapstructure:"CLIENT_ORIGIN"`
 	AccessTokenPrivateKey  string        `mapstructure:"ACCESS_TOKEN_PRIVATE_KEY"`
