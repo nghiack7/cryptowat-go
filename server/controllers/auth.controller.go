@@ -131,7 +131,8 @@ func (ac *AuthController) RefreshAccessToken(ctx *gin.Context) {
 }
 
 func (ac *AuthController) LogoutUser(ctx *gin.Context) {
-	ctx.SetCookie("access_token", "", 60, "/", "localhost", false, true)
+	config, _ := config.LoadConfig(".")
+	ctx.SetCookie("access_token", "", 60, "/", config.Domain, false, true)
 
 }
 
