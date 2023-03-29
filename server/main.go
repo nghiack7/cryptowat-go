@@ -12,6 +12,7 @@ import (
 	"github.com/cryptowat-go/server/routes"
 	"github.com/cryptowat-go/server/services"
 	"github.com/gin-contrib/cors"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -69,13 +70,15 @@ func init() {
 	ETHRouteController = routes.NewETHController(ETHController)
 
 	server = gin.Default()
+	server.Use(static.Serve("/", static.LocalFile("./dist", true)))
+
 	ETHService.InitWebSocket()
 }
 
 func main() {
 
 	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"http://localhost:8000", "http://localhost:3000", "https://cryptowat-app.herokuapp.com"}
+	corsConfig.AllowOrigins = []string{"http://localhost:8000", "http://localhost:3000", "https://cryptowat-app.herokuapp.com", "*"}
 	corsConfig.AllowCredentials = true
 
 	server.Use(cors.New(corsConfig))
