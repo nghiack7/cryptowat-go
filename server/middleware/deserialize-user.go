@@ -18,8 +18,12 @@ func DeserializeUser(userService services.UserService) gin.HandlerFunc {
 		fmt.Println("cookie: ", cookie)
 		fmt.Println("err: ", err)
 		if cookie == "" {
-			structCookie, _ := ctx.Request.Cookie("access_token")
-			cookie = structCookie.Value
+			structCookie, err := ctx.Request.Cookie("access_token")
+			if err != nil {
+				fmt.Println("Error: ", err)
+			} else {
+				cookie = structCookie.Value
+			}
 		}
 		authorizationHeader := ctx.Request.Header.Get("Authorization")
 		fields := strings.Fields(authorizationHeader)
