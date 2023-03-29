@@ -5,7 +5,6 @@ import LoginPage from "../pages/login.page";
 import ProfilePage from "../pages/profile.page";
 import RegisterPage from "../pages/register.page";
 import EthPage from "../pages/eth.page";
-import {Position} from "postcss";
 import EthPosition from "../pages/eth.position.page";
 
 // @ts-ignore

@@ -82,7 +82,19 @@ func main() {
 	corsConfig.AllowCredentials = true
 
 	server.Use(cors.New(corsConfig))
+	server.LoadHTMLGlob("dist/*.html")
+	frontendRoutes := []string{
+		"/",
+		"/profile",
+		"/login",
+		"/logout",
+		"/eth",
+		"eth/positions",
+	}
 
+	for _, route := range frontendRoutes {
+		server.GET(route, Home)
+	}
 	router := server.Group("/api")
 	router.GET("/healthchecker", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, gin.H{"status": "success", "message": "OK"})
@@ -93,4 +105,8 @@ func main() {
 	SessionRouteController.SessionRoute(router)
 	ETHRouteController.ETHRoute(router, userService)
 	log.Fatal(server.Run(":" + cfg.Port))
+}
+
+func Home(c *gin.Context) {
+	c.HTML(http.StatusOK, "index.html", gin.H{})
 }
